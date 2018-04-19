@@ -1,0 +1,46 @@
+<div class="row">
+    <h1>{{title}}: {{customer.fullName}}</h1>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <b>Address:</b>
+    </div>
+    <div class="col-md-4 end">
+        {{address}}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <b>Gets Discount:</b>
+    </div>
+    <div class="col-md-4 end">
+        {{customer.getsDiscount ? 'Yes' : 'No'}}
+    </div>
+</div>
+<br/>
+<discount *ngIf="customer.getsDiscount" [customerDiscount]="customer.discount" (update)="updateDiscount($event)"></discount>
+<div class="row" *ngIf="orders && orders.length > 0">
+    <div class="col-md-12">
+        <h3>Orders</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Total Items</th>
+                    <th>Total Sale</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let order of orders">
+                    <td>
+                        <a href="#/orders/{{order.id}}">{{order.id}}</a>
+                    </td>
+                    <td>{{order.orderDate}}</td>
+                    <td>{{order.totalItems}}</td>
+                    <td>{{order.totalSale | currency:'USD':'symbol'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

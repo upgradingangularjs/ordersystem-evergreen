@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-sm-12">
+        <h1>{{title}}</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <form novalidate #createOrderForm="ngForm" (ngSubmit)="postOrder()">
+            <div class="form-group" [ngClass]="{ 'has-error' : customerId.invalid && customerId.dirty }">
+                <label for="customer">Customer</label>
+                <select class="form-control" 
+                    name="customer" 
+                    [(ngModel)]="newOrder.customerId" 
+                    #customerId="ngModel"
+                    required>
+                    <option *ngFor="let customer of customers" [ngValue]="customer.id">{{customer.fullName}}</option>
+                </select>
+                <p *ngIf="customerId.invalid && customerId.dirty" class="help-block">Customer is required.</p>
+            </div>
+            <div class="row" *ngFor="let item of newOrder.items; index as index">
+                <div class="col-sm-4 form-group">
+                    <label>Product {{index + 1}}
+                        <select class="form-control" 
+                            name="product{{index}}" 
+                            [(ngModel)]="item.productId"
+                            #productId="ngModel">
+                            <option *ngFor="let product of products" [ngValue]="product.id">{{product.name}}</option>
+                        </select></label>
+                </div>
+                <div class="col-sm-4 end form-group" [ngClass]="{ 'has-error' : quantity.invalid && quantity.dirty }">
+                    <label>Quantity
+                        <input name="product{{index}}quantity" class="form-control" type="number"
+                            [(ngModel)]="item.quantity" 
+                            #quantity="ngModel"
+                            [required]="item.productId"
+                        />
+                    </label>
+                    <p *ngIf="quantity.invalid && quantity.dirty"
+                        class="help-block">Quantity is required if you select a product.</p>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="createOrderForm.invalid">Submit</button>
+        </form>
+    </div>
+</div>
