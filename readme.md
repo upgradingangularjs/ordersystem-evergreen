@@ -2,12 +2,15 @@
 
 This is a variation of the sample project used in the course [Upgrading AngularJS](https://www.upgradingangularjs.com). It won't sync up with the videos, but provides a more evergreen and up-to-date starting point for hybrid ngUpgrade apps.
 
-Features:
+It'll also be the experimental playground as new features and best practices evolve for migration.
 
-* Working Webpack development and AOT builds
+Currnt features:
+
+* Express server for testing with an API
+* Webpack development and AOT builds
 * Hybrid setup with AngularJS 1.6 & Angular 5
 * Angular services use HttpClient
-* Yarn lock file
+* Yarn lock files
 
 Coming soon:
 
