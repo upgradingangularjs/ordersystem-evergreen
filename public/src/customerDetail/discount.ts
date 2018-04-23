@@ -51,7 +51,7 @@ function discountComponentController() {
 export class DiscountDirective extends UpgradeComponent {
     @Input() customerDiscount: {};
     @Output() update: EventEmitter<{}>;
-    
+
     constructor(elementRef: ElementRef, injector: Injector){
         super('discount', elementRef, injector);
     }

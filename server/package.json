@@ -7,7 +7,10 @@
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.15.3",
+    "express-jwt": "^5.3.1",
+    "express-jwt-authz": "^1.0.0",
     "express-session": "^1.15.4",
+    "jwks-rsa": "^1.2.1",
     "morgan": "^1.8.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0"

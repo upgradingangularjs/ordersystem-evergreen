@@ -5,11 +5,14 @@ import 'reflect-metadata';
 import 'jquery';
 import 'lodash';
 
-import { downgradeComponent, downgradeInjectable } from '@angular/upgrade/static';
+import {
+  downgradeComponent,
+  downgradeInjectable
+} from '@angular/upgrade/static';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-import "./styles/app.scss";
+import './styles/app.scss';
 
 import hashPrefixConfig from './config.hashprefix';
 import routeProviderConfig from './config.routes';
@@ -21,6 +24,10 @@ import productsComponent from './products/products';
 import productDetailComponent from './productDetail/productDetail';
 import { AddressService } from './shared/addressService';
 import { ProductService } from './products/productService';
+
+import { setHeaders, authInterceptor } from './auth.interceptor.ajs';
+import { AuthService } from './shared/authService';
+import { runAuth } from './app.run.ajs';
 
 //ngUpgrade
 import { HomeComponent } from './home/home.component';
@@ -34,9 +41,13 @@ import { CreateOrderComponent } from './createOrder/create-order.component';
 
 export const MODULE_NAME = 'app';
 
-angular.module(MODULE_NAME, ['ngRoute'])
+angular
+  .module(MODULE_NAME, ['ngRoute'])
   .config(hashPrefixConfig)
   .config(routeProviderConfig)
+  .factory('setHeaders', setHeaders)
+  .config(authInterceptor)
+  .run(runAuth)
   .component('navigation', navigationComponent)
   .component('discount', discountComponent)
   .component('orderDetail', orderDetailComponent)
@@ -45,11 +56,24 @@ angular.module(MODULE_NAME, ['ngRoute'])
   .directive('validateDate', validateDateDirective)
   .service('addressService', AddressService)
   .service('productService', ProductService)
-  .directive('createOrder', downgradeComponent({ component: CreateOrderComponent }) as angular.IDirectiveFactory)
-  .directive('customerDetail', downgradeComponent({ component: CustomerDetailComponent }) as angular.IDirectiveFactory)
-  .directive('customersTable', downgradeComponent({ component: CustomersTableComponent }) as angular.IDirectiveFactory)
-  .directive('customers', downgradeComponent({component: CustomersComponent}) as angular.IDirectiveFactory)
-  .directive('home', downgradeComponent({component: HomeComponent}) as angular.IDirectiveFactory)
-  .directive('orders', downgradeComponent({ component: OrdersComponent }) as angular.IDirectiveFactory)
+  .directive('createOrder', downgradeComponent({
+    component: CreateOrderComponent
+  }) as angular.IDirectiveFactory)
+  .directive('customerDetail', downgradeComponent({
+    component: CustomerDetailComponent
+  }) as angular.IDirectiveFactory)
+  .directive('customersTable', downgradeComponent({
+    component: CustomersTableComponent
+  }) as angular.IDirectiveFactory)
+  .directive('customers', downgradeComponent({
+    component: CustomersComponent
+  }) as angular.IDirectiveFactory)
+  .directive('home', downgradeComponent({
+    component: HomeComponent
+  }) as angular.IDirectiveFactory)
+  .directive('orders', downgradeComponent({
+    component: OrdersComponent
+  }) as angular.IDirectiveFactory)
   .factory('customerService', downgradeInjectable(CustomerService))
-  .factory('orderService', downgradeInjectable(OrderService));
+  .factory('orderService', downgradeInjectable(OrderService))
+  .service('authService', AuthService);

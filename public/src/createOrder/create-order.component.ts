@@ -30,7 +30,7 @@ export class CreateOrderComponent implements OnInit {
         ]
     };
 
-    constructor(private orderService: OrderService, private customerService: CustomerService, 
+    constructor(private orderService: OrderService, private customerService: CustomerService,
         @Inject('$location') private $location, private productService: ProductService){
 
         }
@@ -42,7 +42,7 @@ export class CreateOrderComponent implements OnInit {
             this.customers = data[1] as any[];
         });
     }
-    
+
     postOrder() {
         this.newOrder.items = this.newOrder.items.filter(x => x.productId !== null);
 

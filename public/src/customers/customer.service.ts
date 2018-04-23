@@ -11,7 +11,9 @@ export class CustomerService {
   constructor(private http: HttpClient) {}
 
   getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>('/api/customers');
+    return this.http.get<Customer[]>('/api/customers', {
+      headers: { Authorization: `Bearer ${localStorage.access_token}` }
+    });
   }
 
   getCustomer(id): Promise<Customer> {
