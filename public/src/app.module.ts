@@ -5,6 +5,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MODULE_NAME } from './app.module.ajs';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
+
 import {
   locationServiceProvider,
   productServiceProvider,
@@ -45,7 +48,12 @@ import { CreateOrderComponent } from './createOrder/create-order.component';
     OrderService,
     locationServiceProvider,
     productServiceProvider,
-    addressServiceProvider
+    addressServiceProvider,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ]
 })
 export class AppModule {
