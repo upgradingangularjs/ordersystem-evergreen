@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { UpgradeModule } from '@angular/upgrade/static';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,6 +24,10 @@ import { OrdersComponent } from './orders/orders.component';
 import { OrderService } from './orders/order.service';
 import { CreateOrderComponent } from './createOrder/create-order.component';
 import { AuthService } from './shared/auth.service';
+
+export function get_token(authService: AuthService) {
+  return () => authService.getToken();
+}
 
 @NgModule({
   imports: [BrowserModule, UpgradeModule, HttpClientModule, FormsModule],
@@ -55,7 +59,13 @@ import { AuthService } from './shared/auth.service';
       useClass: AuthInterceptor,
       multi: true
     },
-    AuthService
+    AuthService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: get_token,
+      deps: [AuthService],
+      multi: true
+    }
   ]
 })
 export class AppModule {

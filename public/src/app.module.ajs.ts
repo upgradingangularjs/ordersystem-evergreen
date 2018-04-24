@@ -27,7 +27,6 @@ import { ProductService } from './products/productService';
 
 import { setHeaders, authInterceptor } from './auth.interceptor.ajs';
 import { AuthService } from './shared/auth.service';
-import { runAuth } from './app.run.ajs';
 
 //ngUpgrade
 import { HomeComponent } from './home/home.component';
@@ -47,7 +46,6 @@ angular
   .config(routeProviderConfig)
   .factory('setHeaders', setHeaders)
   .config(authInterceptor)
-  .run(runAuth)
   .component('navigation', navigationComponent)
   .component('discount', discountComponent)
   .component('orderDetail', orderDetailComponent)
