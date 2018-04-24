@@ -1,7 +1,14 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/toPromise';
+
 import { CLIENT_ID, CLIENT_SECRET } from '../../../authVariables';
 
+@Injectable()
 export class AuthService {
-  constructor(private $http) {}
+  constructor(private http: HttpClient) {}
 
   getToken() {
     if (!this.hasToken() || !this.isAuthenticated()) {
@@ -12,9 +19,12 @@ export class AuthService {
         "audience":"ordersystem-api",
         "grant_type":"client_credentials"}`;
       const options = { headers: { 'content-type': 'application/json' } };
-      return this.$http.post(url, body, options).then(response => {
-        this.setSession(response.data);
-      });
+      return this.http
+        .post(url, body, options)
+        .toPromise()
+        .then(response => {
+          this.setSession(response);
+        });
     }
   }
 

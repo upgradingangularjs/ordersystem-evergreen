@@ -26,7 +26,7 @@ import { AddressService } from './shared/addressService';
 import { ProductService } from './products/productService';
 
 import { setHeaders, authInterceptor } from './auth.interceptor.ajs';
-import { AuthService } from './shared/authService';
+import { AuthService } from './shared/auth.service';
 import { runAuth } from './app.run.ajs';
 
 //ngUpgrade
@@ -76,4 +76,4 @@ angular
   }) as angular.IDirectiveFactory)
   .factory('customerService', downgradeInjectable(CustomerService))
   .factory('orderService', downgradeInjectable(OrderService))
-  .service('authService', AuthService);
+  .factory('authService', downgradeInjectable(AuthService));

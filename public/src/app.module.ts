@@ -23,6 +23,7 @@ import { CustomerService } from './customers/customer.service';
 import { OrdersComponent } from './orders/orders.component';
 import { OrderService } from './orders/order.service';
 import { CreateOrderComponent } from './createOrder/create-order.component';
+import { AuthService } from './shared/auth.service';
 
 @NgModule({
   imports: [BrowserModule, UpgradeModule, HttpClientModule, FormsModule],
@@ -53,7 +54,8 @@ import { CreateOrderComponent } from './createOrder/create-order.component';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true
-    }
+    },
+    AuthService
   ]
 })
 export class AppModule {
