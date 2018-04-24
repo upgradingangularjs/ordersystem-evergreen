@@ -4,16 +4,18 @@ export class AuthService {
   constructor(private $http) {}
 
   getToken() {
-    const url = 'https://samjulien.auth0.com/oauth/token';
-    const body = `{
-      "client_id":"${CLIENT_ID}",
-      "client_secret":"${CLIENT_SECRET}",
-      "audience":"ordersystem-api",
-      "grant_type":"client_credentials"}`;
-    const options = { headers: { 'content-type': 'application/json' } };
-    return this.$http.post(url, body, options).then(response => {
-      this.setSession(response.data);
-    });
+    if (!this.hasToken() || !this.isAuthenticated()) {
+      const url = 'https://samjulien.auth0.com/oauth/token';
+      const body = `{
+        "client_id":"${CLIENT_ID}",
+        "client_secret":"${CLIENT_SECRET}",
+        "audience":"ordersystem-api",
+        "grant_type":"client_credentials"}`;
+      const options = { headers: { 'content-type': 'application/json' } };
+      return this.$http.post(url, body, options).then(response => {
+        this.setSession(response.data);
+      });
+    }
   }
 
   isAuthenticated() {
@@ -21,6 +23,11 @@ export class AuthService {
     // access token's expiry time
     let expiresAt = JSON.parse(localStorage.getItem('expires_at'));
     return new Date().getTime() < expiresAt;
+  }
+
+  hasToken() {
+    let token = localStorage.getItem('access_token');
+    return token !== null;
   }
 
   setSession(authResult) {
